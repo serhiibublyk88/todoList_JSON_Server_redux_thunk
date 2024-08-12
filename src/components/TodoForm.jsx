@@ -1,20 +1,12 @@
-import  { useEffect, useState } from "react";
-import styles from "../App.module.css";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../actions/todoActions";
-import {
-  setSearchTerm,
-  toggleSort,
-  setLoadingMessage,
-} from "../actions/uiActions";
+import { setSearchTerm, toggleSort, setLoadingMessage } from "../actions/uiActions";
+import styles from "../App.module.css";
 
 const TodoForm = () => {
   const dispatch = useDispatch();
-  const { searchTerm, isSorted, isProcessing } = useSelector(
-    (state) => state.ui
-  );
-
-  // Хранение списка тудушек и текущего индекса
+  const { searchTerm, isSorted, isProcessing } = useSelector((state) => state.ui);
   const [todos, setTodos] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -42,13 +34,11 @@ const TodoForm = () => {
       return;
     }
 
-    // Используем имя следующей тудушки из списка
-    const nextTodoTitle = todos[currentIndex].title;
-
+    const nextTodo = todos[currentIndex];
     const newTodo = {
-      title: nextTodoTitle,
+      title: nextTodo.title, 
       completed: false,
-      id: Date.now().toString(),
+      id: Date.now().toString(), // Генерация нового ID
     };
 
     dispatch(setLoadingMessage("Adding todo..."));
@@ -64,7 +54,6 @@ const TodoForm = () => {
 
   return (
     <div className={styles.controls}>
-      
       <button onClick={handleAddTodo} disabled={isProcessing}>
         Add todo
       </button>
@@ -79,10 +68,6 @@ const TodoForm = () => {
       </button>
     </div>
   );
-};
-
-TodoForm.propTypes = {
-  // Define prop types if needed
 };
 
 export default TodoForm;
