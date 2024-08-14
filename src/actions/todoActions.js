@@ -1,7 +1,10 @@
+
 export const ADD_TODO = "ADD_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const DELETE_TODO = "DELETE_TODO";
 export const SET_TODOS = "SET_TODOS";
+export const SET_CURRENT_INDEX = "SET_CURRENT_INDEX";
+export const FETCH_NEXT_TODO_SUCCESS = "FETCH_NEXT_TODO_SUCCESS";
 
 export const addTodo = (todo) => async (dispatch) => {
   try {
@@ -50,3 +53,19 @@ export const setTodos = (todos) => ({
   type: SET_TODOS,
   payload: todos,
 });
+
+export const setCurrentIndex = (index) => ({
+  type: SET_CURRENT_INDEX,
+  payload: index,
+});
+
+export const fetchNextTodo = (currentIndex) => async (dispatch) => {
+  try {
+    const response = await fetch("http://localhost:3000/todo");
+    const todos = await response.json();
+    const nextTodo = todos[currentIndex % todos.length];
+    dispatch({ type: FETCH_NEXT_TODO_SUCCESS, payload: nextTodo });
+  } catch (error) {
+    console.error("Failed to fetch next todo:", error);
+  }
+};

@@ -1,19 +1,18 @@
+
 import { useSelector } from "react-redux";
 import TodoItem from "./TodoItem";
 import styles from "../App.module.css";
 
 const TodoList = () => {
-  const todos = useSelector((state) => state.todos || []); // Защита от неопределенности
-  const { searchTerm = "", isSorted } = useSelector((state) => state.ui); // Защита от неопределенности
+  const todos = useSelector((state) => state.todos.todos || []); // Защита от неопределенности
+  const { searchTerm = "", isSorted } = useSelector((state) => state.ui || {}); // Защита от неопределенности
 
-  // Фильтрация тудушек по поисковому запросу
   const filteredTodos = todos.filter((todo) =>
     todo.title
       ? todo.title.toLowerCase().includes(searchTerm.toLowerCase())
       : false
   );
 
-  // Сортировка тудушек по алфавиту, если включена сортировка
   if (isSorted) {
     filteredTodos.sort((a, b) => a.title.localeCompare(b.title));
   }

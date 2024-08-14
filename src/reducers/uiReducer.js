@@ -3,7 +3,7 @@ import {
   TOGGLE_SORT,
   SET_LOADING_MESSAGE,
   SET_IS_PROCESSING,
-} from "../actions";
+} from "../actions/uiActions"; // Исправлен импорт из правильного файла
 
 const initialState = {
   searchTerm: "",
